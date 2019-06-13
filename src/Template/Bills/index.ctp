@@ -3,6 +3,22 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Bill[]|\Cake\Collection\CollectionInterface $bills
  */
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+if (isset($_SESSION['Auth']['User']['mxid'])){
+    if ( ($_SESSION['Auth']['User']['mxid'] == '1')){
+        $admin = 1;
+    }else {
+      $admin = 0;
+    }
+}else{
+    //tak login takleh view data
+    header("Location:users/login");
+    die();
+}
+
 ?>
 <br>
 <?= $this->element('navigation') ?>
@@ -29,7 +45,10 @@
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $bill->id], array('class' => 'btn btn-info')); ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $bill->id], array('class' => 'btn btn-warning')); ?>
+                    <?php
+                    if ($admin){ ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $bill->id], array('class' => 'btn btn-danger'), ['confirm' => __('Are you sure you want to delete # {0}?', $bill->id)]) ?>
+                    <?php } ?>
                 </td>
             </tr>
             <?php endforeach; ?>
