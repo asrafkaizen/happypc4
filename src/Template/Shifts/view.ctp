@@ -4,35 +4,56 @@
  * @var \App\Model\Entity\Shift $shift
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Shift'), ['action' => 'edit', $shift->user_id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Shift'), ['action' => 'delete', $shift->user_id], ['confirm' => __('Are you sure you want to delete # {0}?', $shift->user_id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Shifts'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Shift'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Bills'), ['controller' => 'Bills', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Bill'), ['controller' => 'Bills', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="shifts view large-9 medium-8 columns content">
-    <h3><?= h($shift->user_id) ?></h3>
-    <table class="vertical-table">
+<br>
+<div class="users view large-9 medium-8 columns content">
+    <h3><?= h($shift->user_id) ?></h3><br>
+    <table class="table table-hover">
+    <?php
+    $queryS = "select * from shifts";
+    $conn = new \mysqli("localhost", "root", "", "happypc");
+    $resultS = mysqli_query($conn, $queryS) or die(mysqli_error($conn));
+    while ($dataS = mysqli_fetch_array($resultS)){
+        $userids = $dataS['user_id'];
+        $locationids = $dataS['location_id'];
+        $billids = $dataS['bill_id'];
+    ?>
         <tr>
-            <th scope="row"><?= __('User') ?></th>
-            <td><?= $shift->has('user') ? $this->Html->link($shift->user->name, ['controller' => 'Users', 'action' => 'view', $shift->user->id]) : '' ?></td>
+            <th scope="row" class="table-info">User ID</th>
+            <td class="table-light"><?= $userids ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Location') ?></th>
-            <td><?= $shift->has('location') ? $this->Html->link($shift->location->name, ['controller' => 'Locations', 'action' => 'view', $shift->location->id]) : '' ?></td>
+            <th scope="row" class="table-info">Location ID</th>
+            <td class="table-light"><?= $locationids ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Bill') ?></th>
-            <td><?= $shift->has('bill') ? $this->Html->link($shift->bill->id, ['controller' => 'Bills', 'action' => 'view', $shift->bill->id]) : '' ?></td>
+            <th scope="row" class="table-info">Bill ID</th>
+            <td class="table-light"><?= $billids ?></td>
+        </tr>
+    <?php
+    }
+    ?>
+    </table>
+
+<!--div class="users view large-9 medium-8 columns content">
+    <h4>
+    <!?= h($computer->id) ?> //uncomment by removing the !
+    </h4>
+    <table class="table table-hover">
+        <tr>
+            <th  scope="row" class="table-info"><?= __('Location') ?></th>
+            <td class="table-light"><?= $computer->has('location') ? $this->Html->link($computer->location->name, ['controller' => 'Locations', 'action' => 'view', $computer->location->id]) : '' ?></td>
+        </tr>
+        <tr>
+            <th  scope="row" class="table-info"><?= __('Model') ?></th>
+             <td class="table-light"><?= h($computer->model) ?></td>
+        </tr>
+        <tr>
+            <th  scope="row" class="table-info"><?= __('Cond') ?></th>
+             <td class="table-light"><?= h($computer->cond) ?></td>
+        </tr>
+        <tr>
+            <th  scope="row" class="table-info"><?= __('Id') ?></th>
+             <td class="table-light"><?= $this->Number->format($computer->id) ?></td>
         </tr>
     </table>
-</div>
+</div-->

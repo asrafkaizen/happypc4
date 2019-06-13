@@ -4,31 +4,26 @@
  * @var \App\Model\Entity\Shift $shift
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $shift->user_id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $shift->user_id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Shifts'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Locations'), ['controller' => 'Locations', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Location'), ['controller' => 'Locations', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Bills'), ['controller' => 'Bills', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Bill'), ['controller' => 'Bills', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="shifts form large-9 medium-8 columns content">
+
+<div>
     <?= $this->Form->create($shift) ?>
     <fieldset>
         <legend><?= __('Edit Shift') ?></legend>
-        <?php
-        ?>
+        <br>
+        <?=$this->Form->control('Staff ID', array('class' => 'form-control')); ?>
+        <br>
+        <?=$this->Form->control('Staff Location', array('class' => 'form-control')); ?>
+        <br>
+        <?=$this->Form->control('Staff Bill', array('class' => 'form-control')); ?>
+
+
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <br>
+    <table>
+    <tr>
+    <td><?= $this->Form->submit('Update', array('class' => 'btn btn-outline-info')); ?><td>
+    <td style="padding-left: 979px;"><button type="button"  class="btn btn-outline-info" onclick="goBack()">Go Back</button></td>
+    </tr>
+    </table>
     <?= $this->Form->end() ?>
 </div>

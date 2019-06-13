@@ -36,10 +36,11 @@ class ShiftsController extends AppController
      */
     public function view($id = null)
     {
+        /*
         $shift = $this->Shifts->get($id, [
             'contain' => ['Users', 'Locations', 'Bills']
         ]);
-
+*/
         $this->set('shift', $shift);
     }
 
@@ -53,12 +54,25 @@ class ShiftsController extends AppController
         $shift = $this->Shifts->newEntity();
         if ($this->request->is('post')) {
             $shift = $this->Shifts->patchEntity($shift, $this->request->getData());
-            if ($this->Shifts->save($shift)) {
-                $this->Flash->success(__('The shift has been saved.'));
+            $user_id = $_POST["user_id"];
+            $location_id = $_POST["location_id"];
+            $bill_id = $_POST["bill_id"];
 
-                return $this->redirect(['action' => 'index']);
+            $query1 = "INSERT INTO shifts(user_id, location_id, bill_id) VALUES ('$user_id', '$location_id', '$bill_id')";
+
+
+            $username = "root";
+            $password = "";
+            $database = "happypc";
+
+            $mysqli = new \mysqli("localhost", $username, $password, $database);
+
+            if ($mysqli->query("$query1"))
+            {
+                $this->Flash->success(__('The shift have been saved'));
+            }else{
+                $this->Flash->error(__('The shift could not be saved. Error : '.mysqli_error($mysqli).' '));
             }
-            $this->Flash->error(__('The shift could not be saved. Please, try again.'));
         }
         $users = $this->Shifts->Users->find('list', ['limit' => 200]);
         $locations = $this->Shifts->Locations->find('list', ['limit' => 200]);
@@ -111,5 +125,42 @@ class ShiftsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function viewk(){
+
+    }
+
+    public function editk(){
+
+        if ($this->request->is('post')) {
+
+            $user_id_orig = $_GET["u"];
+            $location_id_orig = $_GET["l"];
+            $bill_id_orig = $_GET["b"];
+
+            $user_id = $_POST["user_id"];
+            $location_id = $_POST["location_id"];
+            $bill_id = $_POST["bill_id"];
+
+            $query1 = "UPDATE shifts SET user_id='$user_id', location_id='$location_id', bill_id='$bill_id' WHERE user_id='$user_id_orig' AND location_id='$location_id_orig' AND bill_id='$bill_id'";
+
+
+            $username = "root";
+            $password = "";
+            $database = "happypc";
+
+            $mysqli = new \mysqli("localhost", $username, $password, $database);
+
+            if ($mysqli->query("$query1"))
+            {
+                $this->Flash->success(__('The shift have been saved'));
+                return $this->redirect(['action' => 'index']);
+
+            }else{
+                $this->Flash->error(__('The shift could not be saved. Error : '.mysqli_error($mysqli).' '));
+            }
+        }
+
     }
 }

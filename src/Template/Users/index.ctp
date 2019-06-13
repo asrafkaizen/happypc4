@@ -14,7 +14,7 @@ if (isset($_SESSION['Auth']['User']['mxid'])){
     }
 }else{
     //tak login takleh view data
-    header("Location:login");
+    header("Location:users/login");
     die();
 }
 
