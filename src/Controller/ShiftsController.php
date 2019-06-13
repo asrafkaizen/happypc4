@@ -115,7 +115,31 @@ class ShiftsController extends AppController
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
-    {
+    {   
+        //todo change get to post
+        $user_id_orig = $_GET["u"];
+        $location_id_orig = $_GET["l"];
+        $bill_id_orig = $_GET["b"];
+
+        $queryD = "DELETE FROM shifts WHERE user_id='$user_id_orig' AND location_id='$location_id_orig' AND bill_id='$bill_id_orig'";
+
+        $username = "root";
+        $password = "";
+        $database = "happypc";
+
+        $mysqli = new \mysqli("localhost", $username, $password, $database);
+
+        if ($mysqli->query("$queryD"))
+        {
+            $this->Flash->success(__('The shift have been deleted'));
+            return $this->redirect(['action' => 'index']);
+
+        }else{
+            $this->Flash->error(__('The shift could not be saved. Error : '.mysqli_error($mysqli).' '));
+        }
+
+
+        /* original cake.php lines
         $this->request->allowMethod(['post', 'delete']);
         $shift = $this->Shifts->get($id);
         if ($this->Shifts->delete($shift)) {
@@ -123,7 +147,7 @@ class ShiftsController extends AppController
         } else {
             $this->Flash->error(__('The shift could not be deleted. Please, try again.'));
         }
-
+        */
         return $this->redirect(['action' => 'index']);
     }
 

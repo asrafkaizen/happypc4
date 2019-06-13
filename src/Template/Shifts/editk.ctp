@@ -4,6 +4,21 @@
  * @var \App\Model\Entity\Shift $shift
  */
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
+  if (isset($_SESSION['Auth']['User']['mxid'])){
+    if ( ($_SESSION['Auth']['User']['mxid'] == '1')){
+        $admin = 1;
+    }else {
+      $admin = 0;
+    }
+  }else{
+    //tak login takleh view data
+    header("Location:users/login");
+    die();
+  }
+
 $conn = new \mysqli("localhost", "root", "", "happypc");
 $user = $_GET["u"];
 $location = $_GET["l"];
@@ -22,6 +37,11 @@ if ($row = mysqli_fetch_array($result_loc)){
 }
 
 ?>
+
+<br>
+<?= $this->element('navigation') ?>
+<br>
+<br><br>
 
 <br>
 <div class="users view large-9 medium-8 columns content">
@@ -43,7 +63,7 @@ if ($row = mysqli_fetch_array($result_loc)){
 
         ?>
 
-<input type="hidden" name="_csrfToken" autocomplete="off" value="0383b4bb4216a5cadbc9c3ff344d6cfcc6962cf69647e821f008cb8ca3704e5d9c4b92b2e104213ab4d8c5baa06f256f0f979002d234de719f0ee8753c0cf876">
+<input type="hidden" name="_csrfToken" autocomplete="off" value="20665da718854259f2ff4a7eea9d42e227080a17cd0ebe520b1085214fa6d3a4d9a3905e005ae256de071970f4765f541a5d80dfa9b7a64b99a5712e1bfbc141">
 
         <br>
         <h6>Enter User ID:</h6>

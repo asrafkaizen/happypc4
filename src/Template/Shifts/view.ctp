@@ -3,7 +3,28 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Shift $shift
  */
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
+  if (isset($_SESSION['Auth']['User']['mxid'])){
+    if ( ($_SESSION['Auth']['User']['mxid'] == '1')){
+        $admin = 1;
+    }else {
+      $admin = 0;
+    }
+  }else{
+    //tak login takleh view data
+    header("Location:users/login");
+    die();
+  }
+
 ?>
+<br>
+<?= $this->element('navigation') ?>
+<br>
+<br><br>
+
 <br>
 <div class="users view large-9 medium-8 columns content">
     <h3><?= h($shift->user_id) ?></h3><br>

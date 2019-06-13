@@ -3,6 +3,22 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Shift $shift
  */
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
+  if (isset($_SESSION['Auth']['User']['mxid'])){
+    if ( ($_SESSION['Auth']['User']['mxid'] == '1')){
+        $admin = 1;
+    }else {
+      $admin = 0;
+    }
+  }else{
+    //tak login takleh view data
+    header("Location:users/login");
+    die();
+  }
+  
 $conn = new \mysqli("localhost", "root", "", "happypc");
 $user = $_GET["u"];
 $location = $_GET["l"];
@@ -20,6 +36,12 @@ if ($row = mysqli_fetch_array($result)){
     $loc_name = $row['name'];
 }
 ?>
+
+<br>
+<?= $this->element('navigation') ?>
+<br>
+<br><br>
+
 <br>
 <div class="users view large-9 medium-8 columns content">
 <br>

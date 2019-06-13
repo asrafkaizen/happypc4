@@ -42,6 +42,13 @@
     </div>
   </li>
   <li>
+  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">Bills</a>
+    <div class="dropdown-menu">
+      <a><?= $this->Html->link(__('List'), ['controller' => 'Bills', 'action' => 'index'], array('class' => 'dropdown-item')); ?></a>
+      <a><?= $this->Html->link(__('Add New'), ['controller' => 'Bills', 'action' => 'add'], array('class' => 'dropdown-item')); ?></a>
+    </div>
+    </li>
+  <li>
   <?= $this->Html->link(__('Logout'), ['controller' => 'Users', 'action' => 'logout'], array('class' => 'btn btn-outline-info')); ?>
   </li>
 </ul>

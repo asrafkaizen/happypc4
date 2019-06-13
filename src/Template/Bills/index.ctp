@@ -3,33 +3,13 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Bill[]|\Cake\Collection\CollectionInterface $bills
  */
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-if (isset($_SESSION['Auth']['User']['mxid'])){
-    if ( ($_SESSION['Auth']['User']['mxid'] == '1')){
-        $admin = 1;
-    }else {
-      $admin = 0;
-    }
-}else{
-    //tak login takleh view data
-    header("Location:users/login");
-    die();
-}
-
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Bill'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Shifts'), ['controller' => 'Shifts', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Shift'), ['controller' => 'Shifts', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
+<br>
+<?= $this->element('navigation') ?>
+<br>
 <div class="bills index large-9 medium-8 columns content">
     <h3><?= __('Bills') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
@@ -41,18 +21,15 @@ if (isset($_SESSION['Auth']['User']['mxid'])){
         </thead>
         <tbody>
             <?php foreach ($bills as $bill): ?>
-            <tr>
+            <tr class="table-light">
                 <td><?= $this->Number->format($bill->id) ?></td>
                 <td><?= $this->Number->format($bill->payment) ?></td>
                 <td><?= $this->Number->format($bill->cost) ?></td>
                 <td><?= h($bill->time) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $bill->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $bill->id]) ?>
-                    <?php
-                    if ($admin){ ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $bill->id], ['confirm' => __('Are you sure you want to delete # {0}?', $bill->id)]) ?>
-                    <?php } ?>
+                    <?= $this->Html->link(__('View'), ['action' => 'view', $bill->id], array('class' => 'btn btn-info')); ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $bill->id], array('class' => 'btn btn-warning')); ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $bill->id], array('class' => 'btn btn-danger'), ['confirm' => __('Are you sure you want to delete # {0}?', $bill->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

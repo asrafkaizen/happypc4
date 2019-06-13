@@ -3,32 +3,11 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Bill $bill
  */
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-if (isset($_SESSION['Auth']['User']['mxid'])){
-    //staff admin bole tgok
-}else{
-    //tak login takleh view data
-    header("Location:users/login");
-    die();
-}
-
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Bill'), ['action' => 'edit', $bill->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Bill'), ['action' => 'delete', $bill->id], ['confirm' => __('Are you sure you want to delete # {0}?', $bill->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Bills'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Bill'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Shifts'), ['controller' => 'Shifts', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Shift'), ['controller' => 'Shifts', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
+<br>
 <div class="bills view large-9 medium-8 columns content">
     <h3><?= h($bill->id) ?></h3>
-    <table class="vertical-table">
+    <table class="table table-hover">>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($bill->id) ?></td>
@@ -71,4 +50,6 @@ if (isset($_SESSION['Auth']['User']['mxid'])){
         </table>
         <?php endif; ?>
     </div>
+        <br><br>
+    <button type="button" class="btn btn-outline-info" onclick="goBack()">Go Back</button>
 </div>
